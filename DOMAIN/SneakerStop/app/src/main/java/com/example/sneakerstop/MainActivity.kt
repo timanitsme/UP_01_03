@@ -9,9 +9,16 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.sneakerstop.ui.theme.SneakerStopTheme
+import com.example.sneakerstop.view.Navigation.Navigation
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,29 +26,27 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             SneakerStopTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                //val vm:MainViewModel = viewModel()
+                //var startScreen by remember { mutableStateOf("") }
+                val startScreen = "regScreen"
+                LaunchedEffect(Unit)
+                {
+                    /*vm.is_Logged { success ->
+                        if (true){
+                            startScreen = "homeScreen"
+                        }
+                        else{
+                            startScreen = "authScreen"
+                        }
+
+                    }*/
+
                 }
+                if (startScreen != ""){
+                    Navigation(startScreen)
+                }
+
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    SneakerStopTheme {
-        Greeting("Android")
     }
 }
