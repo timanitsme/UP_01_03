@@ -28,7 +28,7 @@ class MainActivity : ComponentActivity() {
             SneakerStopTheme {
                 //val vm:MainViewModel = viewModel()
                 //var startScreen by remember { mutableStateOf("") }
-                val startScreen = "regScreen"
+                val startScreen = "splashScreen"
                 LaunchedEffect(Unit)
                 {
                     /*vm.is_Logged { success ->

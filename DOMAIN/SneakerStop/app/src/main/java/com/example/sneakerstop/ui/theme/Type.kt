@@ -13,7 +13,8 @@ val Raleway = FontFamily(
     Font(R.font.raleway_regular),
     Font(R.font.raleway_bold, FontWeight.Bold),
     Font(R.font.raleway_italic, FontWeight.Normal, FontStyle.Italic),
-    Font(R.font.raleway_medium, FontWeight.Medium)
+    Font(R.font.raleway_medium, FontWeight.Medium),
+    Font(R.font.raleway_semi_bold, FontWeight.SemiBold)
 )
 
 // Set of Material typography styles to start with
@@ -82,6 +83,14 @@ val BodySmallMedium = TextStyle(
     fontSize = 16.sp,
     letterSpacing = 0.sp,
     lineHeight = 20.sp
+)
+
+val BodySemiBold = TextStyle(
+    fontFamily = Raleway,
+    fontWeight = FontWeight.SemiBold,
+    fontSize = 18.sp,
+    letterSpacing = 0.sp,
+    lineHeight = 24.sp
 )
 
 val BodySmallInput = TextStyle(
