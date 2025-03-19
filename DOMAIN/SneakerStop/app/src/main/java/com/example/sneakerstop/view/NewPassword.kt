@@ -39,6 +39,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.sneakerstop.R
 import com.example.sneakerstop.ui.theme.Accent
 import com.example.sneakerstop.ui.theme.Background
@@ -46,21 +47,33 @@ import com.example.sneakerstop.ui.theme.Block
 import com.example.sneakerstop.ui.theme.BodySmallInput
 import com.example.sneakerstop.ui.theme.BodySmallMedium
 import com.example.sneakerstop.ui.theme.BodyUltraSmall
+import com.example.sneakerstop.ui.theme.Disable
 import com.example.sneakerstop.ui.theme.Hint
 import com.example.sneakerstop.ui.theme.SubTextDark
 import com.example.sneakerstop.ui.theme.TitleLargeSmall
+import com.example.sneakerstop.viewmodel.MainViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
-fun NewPassword(){
-    var email by remember { mutableStateOf("") }
+fun NewPassword(navController: NavController, email: String, otp: String){
     var password by remember { mutableStateOf("") }
     var confirmedPassword by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }
     var confirmedPasswordVisible by remember { mutableStateOf(false) }
     val maxLength = 50
     val context = LocalContext.current
+    var buttonColor by remember { mutableStateOf(Disable) }
+    val vm = MainViewModel()
+
+    fun checkButtonColor(){
+        if (confirmedPassword.length >= 6 && password.length >= 6 && confirmedPassword == password){
+            buttonColor = Accent
+        }
+        else{
+            buttonColor = Disable
+        }
+    }
 
     Column(modifier= Modifier.fillMaxSize().background(Block)){
         Row(modifier = Modifier.fillMaxWidth()){
@@ -159,29 +172,37 @@ fun NewPassword(){
                 },
                 onValueChange = {
                     if (it.length <= maxLength) confirmedPassword = it
+                    checkButtonColor()
                 },
                 placeholder = { Text("123456", style= BodySmallInput) },
                 singleLine = true
             )
 
             Button(onClick = {
-                if (password.isNotEmpty() && confirmedPassword.isNotEmpty()){
-                    /*vm.signIn(email, password){success ->
-                        if (success){
-                            Toast.makeText(context, "Авторизация успешна", Toast.LENGTH_SHORT).show()
-                            navController.navigate("homeScreen")
+                if (password.isNotEmpty() && confirmedPassword.isNotEmpty() && password == confirmedPassword){
+                    vm.updatePassword(otp, password){updateSuccess, message ->
+                        if (updateSuccess){
+                            Toast.makeText(context, "Пароль успешно изменен", Toast.LENGTH_SHORT).show()
+                            navController.navigate("authScreen"){
+                                popUpTo("newPasswordScreen"){
+                                    inclusive = true
+                                }
+                            }
                         }
                         else{
-                            Toast.makeText(context, "Неверные данные", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
                         }
-                    }*/
+                    }
+                }
+                else if(password != confirmedPassword){
+                    Toast.makeText(context, "Пароли не совпадают", Toast.LENGTH_SHORT).show()
                 }
                 else{
                     Toast.makeText(context, "Заполните поля", Toast.LENGTH_SHORT).show()
                 }
 
             }, shape= RoundedCornerShape(8.dp), modifier = Modifier.fillMaxWidth(), colors = ButtonDefaults.buttonColors(
-                containerColor = Accent
+                containerColor = buttonColor
             )){
                 Text("Сохранить", style= BodySmallInput, color = Background, textAlign = TextAlign.Center, modifier = Modifier.padding(10.dp))
             }

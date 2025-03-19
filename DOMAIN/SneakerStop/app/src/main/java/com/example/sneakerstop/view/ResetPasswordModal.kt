@@ -21,17 +21,18 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.sneakerstop.R
 import com.example.sneakerstop.ui.theme.Block
 import com.example.sneakerstop.ui.theme.SubTextDark
 
 @Preview(showBackground = true)
 @Composable
-fun ResetPasswordModal(isOpen: Boolean, onOpenChange: (Boolean) -> Unit){
+fun ResetPasswordModal(isOpen: Boolean, email: String, navController: NavController){
         Column(modifier = Modifier
             .fillMaxSize()
             .background(color = Color(0xCC1B1E28))
-            .clickable { onOpenChange(!isOpen) },
+            .clickable { navController.navigate("verificationScreen/${email}") },
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
         )

@@ -138,6 +138,6 @@ fun ResetPassword(navController: NavController){
         }
     }
     if (isModalOpened)
-        ResetPasswordModal(isOpen = isModalOpened, onOpenChange = {isModalOpened = !isModalOpened})
+        ResetPasswordModal(isOpen = isModalOpened, email=email,navController)
 
 }

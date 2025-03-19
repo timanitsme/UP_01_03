@@ -28,7 +28,7 @@ class MainActivity : ComponentActivity() {
             SneakerStopTheme {
                 //val vm:MainViewModel = viewModel()
                 //var startScreen by remember { mutableStateOf("") }
-                val startScreen = "splashScreen"
+                val startScreen = "homeScreen"
                 LaunchedEffect(Unit)
                 {
                     /*vm.is_Logged { success ->
@@ -42,10 +42,7 @@ class MainActivity : ComponentActivity() {
                     }*/
 
                 }
-                if (startScreen != ""){
-                    Navigation(startScreen)
-                }
-
+                Navigation(startScreen)
             }
         }
     }

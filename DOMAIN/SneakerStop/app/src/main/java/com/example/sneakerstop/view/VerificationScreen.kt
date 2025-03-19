@@ -3,6 +3,7 @@ package com.example.sneakerstop.view
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -22,7 +23,9 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -47,9 +50,11 @@ import com.example.sneakerstop.ui.theme.Background
 import com.example.sneakerstop.ui.theme.Block
 import com.example.sneakerstop.ui.theme.BodySemiBold
 import com.example.sneakerstop.ui.theme.BodySmallMedium
+import com.example.sneakerstop.ui.theme.BodyUltraSmall
 import com.example.sneakerstop.ui.theme.SubTextDark
 import com.example.sneakerstop.ui.theme.TitleLargeSmall
 import com.example.sneakerstop.viewmodel.MainViewModel
+import kotlinx.coroutines.delay
 
 @Composable
 fun PinField(
@@ -95,12 +100,27 @@ fun PinField(
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
-fun VerificationScreen(navController: NavController){
+fun VerificationScreen(navController: NavController, email: String){
     val vm = MainViewModel()
     val pinLength = 6
     val pinValues = remember { MutableList(pinLength) { "" } }
     val focusRequesters = remember { List(pinLength) { FocusRequester() } }
     val context = LocalContext.current
+    var time by remember { mutableIntStateOf(30) }
+    var retryText by remember { mutableStateOf("") }
+    var isRunning by remember { mutableStateOf(true) }
+
+    LaunchedEffect(isRunning) {
+        while(isRunning && time > 0){
+            delay(1000)
+            time--
+        }
+        if (time == 0){
+            retryText = "Отправить заново"
+            isRunning = false
+        }
+
+    }
 
     Column(modifier= Modifier.fillMaxSize().background(Block)){
         Row(modifier = Modifier.fillMaxWidth()){
@@ -119,7 +139,7 @@ fun VerificationScreen(navController: NavController){
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)
             ) {
                 for (i in 0 until pinLength) {
                     PinField(
@@ -132,13 +152,24 @@ fun VerificationScreen(navController: NavController){
                                 }
                             }
                             if (pinValues.all { it.isNotEmpty() }) {
-                                Toast.makeText(context, "PIN-код введен! ${pinValues.joinToString("")}", Toast.LENGTH_SHORT).show()
+                                navController.navigate("newPasswordScreen/${email}/${pinValues.joinToString()}")
                             }
                         },
                         focusRequester = focusRequesters[i]
                     )
                 }
             }
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween){
+                Text(text=retryText, style = BodyUltraSmall.copy(color = SubTextDark), modifier = Modifier.clickable {
+                    if (time == 0){
+                        retryText = ""
+                        time=30
+                        isRunning = true
+                    }
+                })
+                Text(text=if (time != 0) String.format("00:%02d", time) else "", textAlign = TextAlign.Right, style = BodyUltraSmall.copy(color = SubTextDark))
+            }
+
         }
     }
 }

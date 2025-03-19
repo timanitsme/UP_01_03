@@ -4,11 +4,16 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.sneakerstop.domain.utils.Constants
+import com.example.sneakerstop.domain.utils.Constants.supabase
 import com.example.sneakerstop.model.ProfileCreate
+import io.github.jan.supabase.gotrue.OtpType
 import io.github.jan.supabase.gotrue.SignOutScope
 import io.github.jan.supabase.gotrue.auth
+import io.github.jan.supabase.gotrue.providers.AuthProvider
 import io.github.jan.supabase.postgrest.from
 import io.github.jan.supabase.gotrue.providers.builtin.Email
+import io.github.jan.supabase.gotrue.providers.builtin.OTP
+import io.github.jan.supabase.gotrue.user.UserUpdateBuilder
 import kotlinx.coroutines.launch
 
 class MainViewModel: ViewModel() {
@@ -66,6 +71,38 @@ class MainViewModel: ViewModel() {
                 callback(false)
             }
 
+        }
+    }
+
+    fun signInWithOTP(userEmail: String, userOtp: String, callback: (Boolean) -> Unit){
+        viewModelScope.launch {
+            try{
+                supabase.auth.verifyEmailOtp(type = OtpType.Email.EMAIL, email = userEmail, token = userOtp)
+                callback(true)
+            }
+            catch (e:Exception){
+                Log.e("Sign in with OTP errror", e.message ?: "")
+                callback(false)
+            }
+        }
+    }
+
+    fun updatePassword(otp: String, newPassword: String, callback: (Boolean, String) -> Unit) {
+        viewModelScope.launch {
+            try {
+                Constants.supabase.auth.updateUser{
+                    password = newPassword
+                    nonce = otp
+                }
+                callback(true, "")
+            } catch (e: Exception) {
+                Log.e("Update password error", e.message ?: "")
+                if (e.message == "New password should be different from the old password.")
+                    callback(false, "Введен старый пароль")
+                else{
+                    callback(false, "Некорректный токен")
+                }
+            }
         }
     }
 
