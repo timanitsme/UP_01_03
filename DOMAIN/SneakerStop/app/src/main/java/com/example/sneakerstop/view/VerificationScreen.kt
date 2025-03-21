@@ -106,7 +106,7 @@ fun VerificationScreen(navController: NavController, email: String){
     val pinValues = remember { MutableList(pinLength) { "" } }
     val focusRequesters = remember { List(pinLength) { FocusRequester() } }
     val context = LocalContext.current
-    var time by remember { mutableIntStateOf(30) }
+    var time by remember { mutableIntStateOf(60) }
     var retryText by remember { mutableStateOf("") }
     var isRunning by remember { mutableStateOf(true) }
 
@@ -163,11 +163,11 @@ fun VerificationScreen(navController: NavController, email: String){
                 Text(text=retryText, style = BodyUltraSmall.copy(color = SubTextDark), modifier = Modifier.clickable {
                     if (time == 0){
                         retryText = ""
-                        time=30
+                        time=60
                         isRunning = true
                     }
                 })
-                Text(text=if (time != 0) String.format("00:%02d", time) else "", textAlign = TextAlign.Right, style = BodyUltraSmall.copy(color = SubTextDark))
+                Text(text=if (time != 0) String.format("%02d:%02d", time/60, time%60) else "", textAlign = TextAlign.Right, style = BodyUltraSmall.copy(color = SubTextDark))
             }
 
         }

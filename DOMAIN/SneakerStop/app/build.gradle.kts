@@ -68,7 +68,8 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-
+    implementation("com.google.zxing:core:3.5.2")
+    implementation("com.journeyapps:zxing-android-embedded:4.3.0")
     implementation(platform("io.github.jan-tennert.supabase:bom:2.6.1"))
     implementation("io.github.jan-tennert.supabase:storage-kt:2.6.1")
     implementation("io.github.jan-tennert.supabase:postgrest-kt:2.6.1")

@@ -93,6 +93,14 @@ val BodySemiBold = TextStyle(
     lineHeight = 24.sp
 )
 
+val BodySmallSemiBold = TextStyle(
+    fontFamily = Raleway,
+    fontWeight = FontWeight.SemiBold,
+    fontSize = 16.sp,
+    letterSpacing = 0.sp,
+    lineHeight = 20.sp
+)
+
 val BodySmallInput = TextStyle(
     fontFamily = Raleway,
     fontWeight = FontWeight.Normal,

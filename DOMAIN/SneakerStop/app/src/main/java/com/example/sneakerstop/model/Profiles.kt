@@ -7,15 +7,23 @@ data class Profiles(
     val id: String,
     val created_at: String?,
     val user_id: String,
-    val photo: String,
-    val firstname: String,
-    val lastname: String,
-    val address: String,
-    val phone: String
+    var photo: String?,
+    var firstname: String?,
+    var lastname: String?,
+    var address: String?,
+    var phone: String?
 )
 
 @Serializable
 data class ProfileCreate(
     val user_id: String,
     val firstname: String,
+)
+
+@Serializable
+data class ProfileUpdate(
+    val firstname: String,
+    val lastname: String?,
+    val address: String?,
+    val phone: String?
 )
