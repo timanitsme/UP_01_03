@@ -1,4 +1,4 @@
-package com.example.sneakerstop.ui.theme
+package com.example.sneakerstop.Presentation.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
@@ -12,7 +12,9 @@ import com.example.sneakerstop.R
 val Raleway = FontFamily(
     Font(R.font.raleway_regular),
     Font(R.font.raleway_bold, FontWeight.Bold),
-    Font(R.font.raleway_italic, FontWeight.Normal, FontStyle.Italic)
+    Font(R.font.raleway_italic, FontWeight.Normal, FontStyle.Italic),
+    Font(R.font.raleway_medium, FontWeight.Medium),
+    Font(R.font.raleway_semi_bold, FontWeight.SemiBold)
 )
 
 // Set of Material typography styles to start with
@@ -73,4 +75,44 @@ val TitleLargeSmall = TextStyle(
     fontWeight = FontWeight.Normal,
     fontSize = 32.sp, // 32px
     letterSpacing = 0.sp,
+)
+
+val BodySmallMedium = TextStyle(
+    fontFamily = Raleway,
+    fontWeight = FontWeight.Medium,
+    fontSize = 16.sp,
+    letterSpacing = 0.sp,
+    lineHeight = 20.sp
+)
+
+val BodySemiBold = TextStyle(
+    fontFamily = Raleway,
+    fontWeight = FontWeight.SemiBold,
+    fontSize = 18.sp,
+    letterSpacing = 0.sp,
+    lineHeight = 24.sp
+)
+
+val BodySmallSemiBold = TextStyle(
+    fontFamily = Raleway,
+    fontWeight = FontWeight.SemiBold,
+    fontSize = 16.sp,
+    letterSpacing = 0.sp,
+    lineHeight = 20.sp
+)
+
+val BodySmallInput = TextStyle(
+    fontFamily = Raleway,
+    fontWeight = FontWeight.Normal,
+    fontSize = 14.sp,
+    letterSpacing = 0.sp,
+    lineHeight = 16.sp
+)
+
+val BodyUltraSmall = TextStyle(
+    fontFamily = Raleway,
+    fontWeight = FontWeight.Normal,
+    fontSize = 12.sp,
+    letterSpacing = 0.sp,
+    lineHeight = 16.sp
 )

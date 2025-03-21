@@ -1,4 +1,4 @@
-package com.example.sneakerstop.ui.theme
+package com.example.sneakerstop.Presentation.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
@@ -11,3 +11,4 @@ val Block = Color(0xFFFFFFFF)
 val Text = Color(0xFF2B2B2B)
 val Hint = Color(0xFF6A6A6A)
 val SubTextDark = Color(0xFF707B81)
+val Black = Color(0xFF2B2B2B)

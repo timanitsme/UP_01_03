@@ -1,4 +1,4 @@
-package com.example.sneakerstop.domain.utils
+package com.example.sneakerstop.Domain.utils
 import io.github.jan.supabase.createSupabaseClient
 import io.github.jan.supabase.gotrue.Auth
 import io.github.jan.supabase.postgrest.Postgrest
